@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Получение социальной карты привилегий</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+        .checkbox-group {
+            margin-bottom: 10px;
+        }
+        .checkbox-group label {
+            display: inline-block;
+            margin-left: 5px; /* Отступ между чекбоксом и текстом */
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px; /* Отступ между чекбоксом и текстом */
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+        }
+        .result {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+        }
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #4CAF50;
+            width: 0;
+        }
+    </style>
+</head>
+<body>
+<title>Полноэкранный режим</title>
+</head>
+<body>
+    <button id="fullscreen-btn">Полноэкранный режим</button>
+
+    <script>
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+<div class="container">
+    <h1>Получение социальной карты привилегий</h1>
+    
+    <form id="applicationForm">
+        <label for="fullName">Фамилия:</label>
+        <input type="text" id="fullName" required>
+        
+                <label for="fullName">Имя:</label>
+        <input type="text" id="fullName" required>
+        
+          <p>  <label for="dob">Дата рождения:</label>
+        <input type="date" id="dob" required>
+<p>
+        <label>Пол:</label>
+        <select id="gender" required>
+                        <option value="male">Выберите пол</option>
+            <option value="male">Мужчина</option>
+            <option value="female">Женщина</option>
+            <option value="non-binary">Не бинарный</option>
+        </select>
+        
+        <div>
+        <label for="passport">Серия паспорта:</label>
+        <input type="text" id="passport" required>
+        <p>
+                    <label for="passport">Адрес проживания:</label>
+        <input type="text" id="adress" required>
+    <p>
+           <label for="inn">ИНН:</label>
+    <input type="text" id="inn" name="inn" required>
+       <hr> </div>
+                <div>
+                    
+                            <label>Страховая организация:</label>
+        <select id="gender" required>
+                        <option value="male">Выберите доступные в городе:</option>
+            <option value="male">Рефбатч страхование</option>
+            <option value="female">ARTPOP INTERNATIONAL INSURANCES</option>
+            <option value="non-binary">Фатима & Шахиризада</option>
+            <option value="non-binary">СПАО "Нина Александровна"</option>
+            <option value="non-binary">Фатима & Шахиризада</option>
+                    <option value="non-binary">YAOI "n" BARA (круг лиц ограничен)</option>
+                    <option value="non-binary">Супьян банк</option>
+                    <option value="non-binary">Chanel Oberlin limited</option>
+                    <option value="Фьючер Страхование">Фьючер Страхование</option>
+<option value="СуперЗащита 360">СуперЗащита 360</option>
+<option value="НеоГарант">НеоГарант</option>
+<option value="Премиум Класс Страхование">Цыганское золото</option>
+<option value="Страховой Хаб">Страховой Хаб</option>
+<option value="Страховой Хаб">Маэстро Алина</option>
+        </select>
+                    
+                    <p>
+                    
+                <label for="fullName">Номер соц.страхования:</label>
+        <input type="text" id="fullName" required>
+        </div>
+<hr>
+        <label for="phone">Телефон:</label>
+        <input type="tel" id="phone" required>
+<hr>
+
+        <label for="payment-system">Выберите платежную систему:</label>
+        <select id="payment-system" name="payment-system">
+            <option value="visa">Выберите платежную систему:</option>
+            <option value="visa">Visa</option>
+            <option value="mastercard">MasterCard</option>
+            <option value="mir">Мир</option>
+            <option value="amex">American Express</option>
+            <option value="discover">Discover</option>
+            <option value="jcb">JCB</option>
+            <option value="dinersclub">Diners Club</option>
+            <option value="unionpay">UnionPay</option>
+                        <option value="unionpay">Mayor Boris (доступно только чиновникам)</option>
+        </select>
+
+<hr>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="beneficiaryToggle" onclick="toggleBeneficiaries()">
+            <label for="beneficiaryToggle">Являюсь льготником</label>
+        </div>
+
+        <div id="beneficiaries" class="hidden">
+            <label>Выберите льготников:</label>
+            <div>
+                <div>
+          <div><input type="checkbox" id="beneficiary1" value="Гадалки"><label for="beneficiary1">Гадалки</label></div>
+                <div><input type="checkbox" id="beneficiary2" value="Инвалиды I группы"><label for="beneficiary2">Инвалиды I группы</label></div>
+                <div><input type="checkbox" id="beneficiary3" value="Инвалиды II группы"><label for="beneficiary3">Инвалиды II группы</label></div>
+                <div><input type="checkbox" id="beneficiary4" value="Инвалиды III группы"><label for="beneficiary4">Инвалиды III группы</label></div>
+                <div><input type="checkbox" id="beneficiary5" value="Участники боевых действий"><label for="beneficiary5">Участники боевых действий</label></div>
+                <div><input type="checkbox" id="beneficiary6" value="Проститутки"><label for="beneficiary6">Проститутки</label></div>
+                <div><input type="checkbox" id="beneficiary7" value="Наркозависимые"><label for="beneficiary7">Наркозависимые</label></div>
+                <div><input type="checkbox" id="beneficiary8" value="Пенсионеры по возрасту"><label for="beneficiary8">Пенсионеры по возрасту</label></div>
+                <div><input type="checkbox" id="beneficiary9" value="Многодетные семьи"><label for="beneficiary9">Многодетные семьи</label></div>
+                <div><input type="checkbox" id="beneficiary10" value="Одинокие матери"><label for="beneficiary10">Одинокие матери</label></div>
+                <div><input type="checkbox" id="beneficiary11" value="Одинокие отцы"><label for="beneficiary11">Одинокие отцы</label></div>
+                <div><input type="checkbox" id="beneficiary12" value="Родители, воспитывающие детей-инвалидов"><label for="beneficiary12">Родители, воспитывающие детей-инвалидов</label></div>
+                <div><input type="checkbox" id="beneficiary13" value="Дети-сироты"><label for="beneficiary13">Дети-сироты</label></div>
+                <div><input type="checkbox" id="beneficiary14" value="Дети, оставшиеся без попечения родителей"><label for="beneficiary14">Дети, оставшиеся без попечения родителей</label></div>
+                <div><input type="checkbox" id="beneficiary15" value="Опекуны несовершеннолетних"><label for="beneficiary15">Опекуны несовершеннолетних</label></div>
+                <div><input type="checkbox" id="beneficiary16" value="Лица, ухаживающие за престарелыми родителями"><label for="beneficiary16">Лица, ухаживающие за престарелыми родителями</label></div>
+                <div><input type="checkbox" id="beneficiary17" value="Лица, ухаживающие за детьми-инвалидами"><label for="beneficiary17">Лица, ухаживающие за детьми-инвалидами</label></div>
+                <div><input type="checkbox" id="beneficiary18" value="Студенты очной формы обучения"><label for="beneficiary18">Студенты очной формы обучения</label></div>
+                <div><input type="checkbox" id="beneficiary19" value="Преподаватели высших учебных заведений"><label for="beneficiary19">Преподаватели высших учебных заведений</label></div>
+                <div><input type="checkbox" id="beneficiary20" value="Воспитатели детских садов"><label for="beneficiary20">Воспитатели детских садов</label></div>
+                <div><input type="checkbox" id="beneficiary21" value="Учителя средних школ"><label for="beneficiary21">Учителя средних школ</label></div>
+                <div><input type="checkbox" id="beneficiary22" value="Медицинские работники"><label for="beneficiary22">Медицинские работники</label></div>
+                <div><input type="checkbox" id="beneficiary23" value="Пожарные"><label for="beneficiary23">Пожарные</label></div>
+                <div><input type="checkbox" id="beneficiary24" value="Полицейские"><label for="beneficiary24">Полицейские</label></div>
+                <div><input type="checkbox" id="beneficiary25" value="Сотрудники фонда SCP"><label for="beneficiary25">Сотрудники фонда SCP</label></div>
+                <div><input type="checkbox" id="beneficiary26" value="Судьи"><label for="beneficiary26">Судьи</label></div>
+                <div><input type="checkbox" id="beneficiary27" value="Работники социальной сферы"><label for="beneficiary27">Работники социальной сферы</label></div>
+                <div><input type="checkbox" id="beneficiary28" value="Ветераны вооруженных сил"><label for="beneficiary28">Ветераны вооруженных сил</label></div>
+                <div><input type="checkbox" id="beneficiary29" value="Работники общественного транспорта"><label for="beneficiary29">Работники общественного транспорта</label></div>
+                <div><input type="checkbox" id="beneficiary30" value="Водители школьных автобусов"><label for="beneficiary30">Водители школьных автобусов</label></div>
+                <div><input type="checkbox" id="beneficiary31" value="Ведьмы"><label for="beneficiary31">Ведьмы</label></div>
+                <div><input type="checkbox" id="beneficiary32" value="Работники правительства"><label for="beneficiary32">Работники правительства</label></div>
+                <div><input type="checkbox" id="beneficiary33" value="Ученые"><label for="beneficiary33">Ученые</label></div>
+                <div><input type="checkbox" id="beneficiary34" value="Оракулы"><label for="beneficiary34">Оракулы</label></div>
+                <div><input type="checkbox" id="beneficiary35" value="Работники сельского хозяйства"><label for="beneficiary35">Работники сельского хозяйства</label></div>
+                <div><input type="checkbox" id="beneficiary36" value="Работники коммунальных служб"><label for="beneficiary36">Работники коммунальных служб</label></div>
+                <div><input type="checkbox" id="beneficiary37" value="Строители (кроме частных фирм)"><label for="beneficiary37">Строители (кроме частных фирм)</label></div>
+                <div><input type="checkbox" id="beneficiary38" value="Лица с хроническими заболеваниями"><label for="beneficiary38">Лица с хроническими заболеваниями</label></div>
+                <div><input type="checkbox" id="beneficiary39" value="Лица с онкологическими заболеваниями"><label for="beneficiary39">Лица с онкологическими заболеваниями</label></div>
+                <div><input type="checkbox" id="beneficiary40" value="Пациенты, нуждающиеся в постоянной медицинской помощи"><label for="beneficiary40">Пациенты, нуждающиеся в постоянной медицинской помощи</label></div>
+                <div><input type="checkbox" id="beneficiary41" value="Лица, перенесшие тяжелые операции"><label for="beneficiary41">Лица, перенесшие тяжелые операции</label></div>
+                <div><input type="checkbox" id="beneficiary42" value="Лица с редкими заболеваниями"><label for="beneficiary42">Лица с редкими заболеваниями</label></div>
+                <div><input type="checkbox" id="beneficiary43" value="Доноры крови"><label for="beneficiary43">Доноры крови</label></div>
+                <div><input type="checkbox" id="beneficiary44" value="Доноры органов"><label for="beneficiary44">Доноры органов</label></div>
+                <div><input type="checkbox" id="beneficiary45" value="Лица, ухаживающие за лицами с психическими заболеваниями"><label for="beneficiary45">Лица, ухаживающие за лицами с психическими заболеваниями</label></div>
+                <div><input type="checkbox" id="beneficiary46" value="Лица, страдающие психическими расстройствами"><label for="beneficiary46">Лица, страдающие психическими расстройствами</label></div>
+                <div><input type="checkbox" id="beneficiary47" value="Лица, получившие увечья на производстве"><label for="beneficiary47">Лица, получившие увечья на производстве</label></div>
+                <div><input type="checkbox" id="beneficiary48" value="Жители экологически неблагополучных районов"><label for="beneficiary48">Жители экологически неблагополучных районов</label></div>
+                <div><input type="checkbox" id="beneficiary49" value="Жители районов с суровыми климатическими условиями"><label for="beneficiary49">Жители районов с суровыми климатическими условиями</label></div>
+                <div><input type="checkbox" id="beneficiary50" value="Молодые специалисты (до 30 лет)"><label for="beneficiary50">Молодые специалисты (до 30 лет)</label></div>
+                <div><input type="checkbox" id="beneficiary51" value="Безработные"><label for="beneficiary51">Безработные</label></div>
+                <div><input type="checkbox" id="beneficiary52" value="Лица, попавшие под сокращение"><label for="beneficiary52">Лица, попавшие под сокращение</label></div>
+                <div><input type="checkbox" id="beneficiary53" value="Лица, находящиеся в поиске работы более года"><label for="beneficiary53">Лица, находящиеся в поиске работы более года</label></div>
+                <div><input type="checkbox" id="beneficiary54" value="Малый бизнес"><label for="beneficiary54">Малый бизнес</label></div>
+                <div><input type="checkbox" id="beneficiary55" value="Индивидуальные предприниматели"><label for="beneficiary55">Индивидуальные предприниматели</label></div>
+                <div><input type="checkbox" id="beneficiary56" value="Представители коренных малочисленных народов"><label for="beneficiary56">Представители коренных малочисленных народов</label></div>
+                <div><input type="checkbox" id="beneficiary57" value="Переселенцы из зоны военных действий"><label for="beneficiary57">Переселенцы из зоны военных действий</label></div>
+                <div><input type="checkbox" id="beneficiary58" value="Беженцы"><label for="beneficiary58">Беженцы</label></div>
+                <div><input type="checkbox" id="beneficiary59" value="Трудовые мигранты"><label for="beneficiary59">Трудовые мигранты</label></div>
+                <div><input type="checkbox" id="beneficiary60" value="Ветераны государственной службы"><label for="beneficiary60">Ветераны государственной службы</label></div>
+                <div><input type="checkbox" id="beneficiary61" value="Работники нефтегазовой промышленности"><label for="beneficiary61">Работники нефтегазовой промышленности</label></div>
+                <div><input type="checkbox" id="beneficiary62" value="Работники металлургической промышленности"><label for="beneficiary62">Работники металлургической промышленности</label></div>
+                <div><input type="checkbox" id="beneficiary63" value="Работники химической промышленности"><label for="beneficiary63">Работники химической промышленности</label></div>
+                <div><input type="checkbox" id="beneficiary64" value="Лица, работающие на вредных производствах"><label for="beneficiary64">Лица, работающие на вредных производствах</label></div>
+                <div><input type="checkbox" id="beneficiary65" value="Трансгендеры"><label for="beneficiary65">Трансгендеры</label></div>
+                <div><input type="checkbox" id="beneficiary66" value="Лица, работающие на удаленных территориях"><label for="beneficiary66">Лица, работающие на удаленных территориях</label></div>
+                <div><input type="checkbox" id="beneficiary67" value="Военнослужащие срочной службы"><label for="beneficiary67">Военнослужащие срочной службы</label></div>
+                <div><input type="checkbox" id="beneficiary68" value="Участники волонтерских движений"><label for="beneficiary68">Участники волонтерских движений</label></div>
+                <div><input type="checkbox" id="beneficiary69" value="Активисты гражданских инициатив"><label for="beneficiary69">Активисты гражданских инициатив</label></div>
+                <div><input type="checkbox" id="beneficiary70" value="Лица не гетеросексуальной ориентации"><label for="beneficiary70">Лица не гетеросексуальной ориентации</label></div>
+                <div><input type="checkbox" id="beneficiary71" value="Лица, пострадавшие в результате чрезвычайных ситуаций"><label for="beneficiary71">Лица, пострадавшие в результате чрезвычайных ситуаций</label></div>
+                <div><input type="checkbox" id="beneficiary72" value="Лица, пострадавшие от насилия"><label for="beneficiary72">Лица, пострадавшие от насилия</label></div>
+                <div><input type="checkbox" id="beneficiary73" value="Жертвы терактов"><label for="beneficiary73">Жертвы терактов</label></div>
+                <div><input type="checkbox" id="beneficiary74" value="Лица, пережившие катастрофы"><label for="beneficiary74">Лица, пережившие катастрофы</label></div>
+                <div><input type="checkbox" id="beneficiary75" value="Жители сельской местности"><label for="beneficiary75">Жители сельской местности</label></div>
+                <div><input type="checkbox" id="beneficiary76" value="Лица, потерявшие трудоспособность"><label for="beneficiary76">Лица, потерявшие трудоспособность</label></div>
+                <div><input type="checkbox" id="beneficiary77" value="Лица, ушедшие на пенсию по инвалидности"><label for="beneficiary77">Лица, ушедшие на пенсию по инвалидности</label></div>
+                <div><input type="checkbox" id="beneficiary78" value="Члены многодетных семей"><label for="beneficiary78">Члены многодетных семей</label></div>
+                <div><input type="checkbox" id="beneficiary79" value="Родители, усыновившие детей"><label for="beneficiary79">Родители, усыновившие детей</label></div>
+                <div><input type="checkbox" id="beneficiary80" value="Лица, воспитывающие детей с особенностями развития"><label for="beneficiary80">Лица, воспитывающие детей с особенностями развития</label></div>
+                <div><input type="checkbox" id="beneficiary81" value="Лица, живущие в домах для престарелых"><label for="beneficiary81">Лица, живущие в домах для престарелых</label></div>
+                <div><input type="checkbox" id="beneficiary82" value="Лица, получающие минимальную пенсию"><label for="beneficiary82">Лица, получающие минимальную пенсию</label></div>
+                <div><input type="checkbox" id="beneficiary83" value="Лица, нуждающиеся в социальной помощи"><label for="beneficiary83">Лица, нуждающиеся в социальной помощи</label></div>
+                <div><input type="checkbox" id="beneficiary84" value="Лица, проживающие в ветхом жилье"><label for="beneficiary84">Лица, проживающие в ветхом жилье</label></div>
+                <div><input type="checkbox" id="beneficiary85" value="Лица, проживающие в аварийном жилье"><label for="beneficiary85">Лица, проживающие в аварийном жилье</label></div>
+                <div><input type="checkbox" id="beneficiary86" value="Пострадавшие от стихийных бедствий"><label for="beneficiary86">Пострадавшие от стихийных бедствий</label></div>
+                <div><input type="checkbox" id="beneficiary87" value="Переселенцы из зоны затопления"><label for="beneficiary87">Переселенцы из зоны затопления</label></div>
+                <div><input type="checkbox" id="beneficiary88" value="Лица, страдающие алкоголизмом (в период реабилитации)"><label for="beneficiary88">Лица, страдающие алкоголизмом (в период реабилитации)</label></div>
+                <div><input type="checkbox" id="beneficiary89" value="Лица, страдающие наркоманией (в период реабилитации)"><label for="beneficiary89">Лица, страдающие наркоманией (в период реабилитации)</label></div>
+                <div><input type="checkbox" id="beneficiary90" value="Лица, находящиеся под программой социальной реабилитации"><label for="beneficiary90">Лица, находящиеся под программой социальной реабилитации</label></div>
+                <div><input type="checkbox" id="beneficiary91" value="Участники программ поддержки семьи и детства"><label for="beneficiary91">Участники программ поддержки семьи и детства</label></div>
+                <div><input type="checkbox" id="beneficiary92" value="Одинокие пенсионеры"><label for="beneficiary92">Одинокие пенсионеры</label></div>
+                <div><input type="checkbox" id="beneficiary93" value="Ветераны педагогического труда"><label for="beneficiary93">Ветераны педагогического труда</label></div>
+                <div><input type="checkbox" id="beneficiary94" value="Специалисты в области высоких технологий"><label for="beneficiary94">Специалисты в области высоких технологий</label></div>
+                <div><input type="checkbox" id="beneficiary95" value="Лица, проходящие альтернативную гражданскую службу"><label for="beneficiary95">Лица, проходящие альтернативную гражданскую службу</label></div>
+                <div><input type="checkbox" id="beneficiary96" value="Воспитанники детских домов"><label for="beneficiary96">Воспитанники детских домов</label></div>
+                <div><input type="checkbox" id="beneficiary97" value="Лица, занимающиеся уходом за пожилыми людьми"><label for="beneficiary97">Лица, занимающиеся уходом за пожилыми людьми</label></div>
+                <div><input type="checkbox" id="beneficiary98" value="Молодежные активисты"><label for="beneficiary98">Молодежные активисты</label></div>
+                <div><input type="checkbox" id="beneficiary99" value="Воспитанники школ-интернатов"><label for="beneficiary99">Воспитанники школ-интернатов</label></div>
+                <div><input type="checkbox" id="beneficiary100" value="Лица, пострадавшие в результате технологических катастроф"><label for="beneficiary100">Лица, пострадавшие в результате технологических катастроф</label></div>
+                </div>
+                <div>
+                    <input type="checkbox" id="beneficiary100" value="Лица, пострадавшие в результате технологических катастроф">
+                    <label for="beneficiary100">Лица, пострадавшие в результате технологических катастроф</label>
+                    <p>
+                    <label for="inn">Номер справки льготного статуса:</label>
+    <input type="text" id="inn" name="inn" required>
+                </div>
+            </div>
+        </div>
+
+
+        <button type="button" class="button" onclick="submitForm()">Далее</button>
+    </form>
+
+    <div id="loading" class="loading">
+        <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+        <p id="loadingText">Отправка данных на сервера мэра кота Бориса...</p>
+    </div>
+
+    <div id="result" class="result">
+        <p>Ближайший отдел соц.страхования находится по адресу: Ницшау, улица имени Леди Гаги, 54/1, 923111</p>
+        <p>Время работы: Пн-Пт с 9:00 до 18:00.</p>
+        <div id="appointmentOptions"></div>
+        <p>Вы успешно записались на получение социальной карты привилегий.</p>
+        <p>Правила безопасности при получении карты: держите карту в безопасном месте, не передавайте ее третьим лицам.</p>
+    </div>
+</div>
+
+<script>
+    function toggleBeneficiaries() {
+        const beneficiariesDiv = document.getElementById('beneficiaries');
+        beneficiariesDiv.classList.toggle('hidden');
+    }
+
+    function submitForm() {
+        const loadingDiv = document.getElementById('loading');
+        const resultDiv = document.getElementById('result');
+        const progressBar = document.getElementById('progressBar');
+        const loadingText = document.getElementById('loadingText');
+        const appointmentOptions = document.getElementById('appointmentOptions');
+        
+        loadingDiv.style.display = 'block';
+        resultDiv.style.display = 'none';
+        progressBar.style.width = '0';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            if (progress < 100) {
+                progress += 1;
+                progressBar.style.width = progress + '%';
+                updateLoadingText(progress);
+            } else {
+                clearInterval(interval);
+                loadingDiv.style.display = 'none';
+                showResult();
+            }
+        }, 100); // 10 секунд
+
+        function updateLoadingText(progress) {
+            if (progress < 25) {
+                loadingText.innerText = "Отправка данных на сервера мэра кота Бориса...";
+            } else if (progress < 50) {
+                loadingText.innerText = "Проверка гражданина в базе...";
+            } else if (progress < 75) {
+                loadingText.innerText = "Получение метаданных от городской администрации...";
+            } else if (progress < 100) {
+                loadingText.innerText = "Поиск нужного отдела соц.страхования...";
+           }
+        }
+    }
+    function showResult() {
+        const resultDiv = document.getElementById('result');
+        const appointmentOptions = document.getElementById('appointmentOptions');
+        appointmentOptions.innerHTML = '';
+
+        // Генерация доступных окон для приема
+        const today = new Date();
+        const daysToAdd = [3, 4, 5, 6, 7, 8, 9, 10]; // от 3 до 10 дней
+        daysToAdd.forEach(days => {
+            const appointmentDate = new Date(today);
+            appointmentDate.setDate(today.getDate() + days);
+
+            // Генерация случайного времени (часы от 9 до 17, минуты 0 или 30)
+            const randomHour = Math.floor(Math.random() * 9) + 9; // Часы от 9 до 17
+            const randomMinute = Math.random() < 0.5 ? 0 : 30; // Минуты 0 или 30
+            appointmentDate.setHours(randomHour, randomMinute, 0, 0);
+
+            const option = document.createElement('div');
+            option.innerHTML = `Доступное окно: ${appointmentDate.toLocaleDateString()} в ${randomHour}:${randomMinute === 0 ? '00' : '30'}`;
+            appointmentOptions.appendChild(option);
+        });
+
+        resultDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
